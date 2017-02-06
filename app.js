@@ -6,6 +6,91 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
+
+
+//mongoose connect
+var db = mongoose.connect('mongodb://localhost/library').connection;
+
+db.on('open', function () {
+    console.log('Everything is okay, mongoDB is connected');
+});
+
+db.on('error', function () {
+    console.log('Ops! Something went wrong, mongoDB is broken');
+});
+
+var person = mongoose.Schema({
+    name: {
+        firstName: String,
+        lastName: String
+    }
+});
+
+//Objeto virtual
+person.virtual('name.fullName').get(function () {
+   return this.name.firstName.concat(' ').concat(this.name.lastName);
+});
+
+var Person = mongoose.model('Person', person);
+
+Person.create({
+    name: {
+        firstName: 'Marcus',
+        lastName: 'Campos'
+    }
+}, function (err, person) {
+
+    if(err) {
+        console.log('Error person ->', err);
+        return;
+    }
+
+    console.log('Person data -> ', person);
+    console.log('Person Fullname -> ', person.name.fullName)
+});
+
+var company = mongoose.Schema({
+    name: String,
+    address: {
+        name: String,
+        number: Number,
+        city: String
+    },
+    date: {
+        type: Date,
+        required: true,
+        default: Date.now
+    }
+});
+
+var Company = mongoose.model('Company', company);
+
+Company.create({
+    name: 'PlugApps',
+    address: {
+        name: 'Address 1',
+        number: 112,
+        city: 'São Paulo'
+    },
+    date: new Date()
+}, function (err, company) {
+    if(err){
+        console.log('error');
+        return;
+    }
+
+    console.log('Created -> ', company)
+});
+
+
+
+
+
+
+
+
+
+
 var index = require('./routes/index');
 var users = require('./routes/users');
 

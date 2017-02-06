@@ -1,2 +1,26 @@
 <h1>{{title}}</h1>
 <p>Welcome to {{title}}</p>
+<table>
+    <thead>
+        <tr>ID</tr>
+        <tr>index</tr>
+        <tr>name</tr>
+    </thead>
+    <tbody>
+        {{#each data}}
+            {{#if @first}}
+                <tr>
+                    <td>{{ 20 }}</td>
+                    <td>{{ 20 }}</td>
+                    <td>First company</td>
+                </tr>
+            {{/if}}
+
+            <tr>
+                <td>{{ id }}</td>
+                <td>{{ @index }}</td>
+                <td>{{ name }}</td>
+            </tr>
+        {{/each}}
+    </tbody>
+</table>
