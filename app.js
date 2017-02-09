@@ -9,7 +9,7 @@ var connection = require('./models/index');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-var person = require('./routes/person')
+var person = require('./routes/person');
 
 var app = express();
 
